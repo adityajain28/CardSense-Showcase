@@ -20,15 +20,19 @@ jobs:
         run: |
           npm init -y
           npm install playwright-core
+          CHROME_PATH="$(which google-chrome || which google-chrome-stable || which chromium || which chromium-browser)"
+          test -n "$CHROME_PATH"
+          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
       - name: Capture live deployment
         run: |
           mkdir -p assets
-          cat > /tmp/capture.js <<'NODE'
+          cat > capture.js <<'NODE'
           const { chromium } = require('playwright-core');
           (async () => {
-            const browser = await chromium.launch({ headless: true, executablePath: '/usr/bin/google-chrome' });
+            const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH });
             const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1.25 });
-            await page.goto('https://cardsense-27fu.onrender.com', { waitUntil: 'networkidle', timeout: 120000 });
+            await page.goto('https://cardsense-27fu.onrender.com', { waitUntil: 'domcontentloaded', timeout: 120000 });
+            await page.waitForTimeout(5000);
             await page.screenshot({ path: 'assets/live-home.png', fullPage: false });
             const sections = page.locator('section');
             if (await sections.count() > 1) {
@@ -39,7 +43,7 @@ jobs:
             await browser.close();
           })().catch(e => { console.error(e); process.exit(1); });
           NODE
-          node /tmp/capture.js
+          node capture.js
       - name: Commit screenshots
         run: |
           git config user.name "github-actions[bot]"
