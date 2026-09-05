@@ -4,7 +4,7 @@
 
 > **Portfolio project** · Source code is maintained in a private repository.
 
-[**Live App →**](https://cardsense-27fu.onrender.com) · [**GitHub Showcase →**](https://github.com/adityajain28/CardSense-Showcase)
+### [▶ Open the live app](https://cardsense-27fu.onrender.com)
 
 CardSense brings card benefits, points balances, usage history, and purchase recommendations into one place. Instead of checking multiple issuer apps or trying to remember which card is best for a purchase, users can track their wallet and get a recommendation based on their cards, benefits, and spending rules.
 
@@ -14,11 +14,23 @@ The application is designed around a simple privacy principle: **personal card d
 
 ## Live product
 
-![CardSense live application](assets/live-home.png)
+These screenshots were captured directly from the deployed CardSense application using a temporary fictional portfolio — no personal financial data is shown.
 
-*Captured directly from the deployed CardSense application.*
+### Dashboard
 
-![CardSense feature overview](assets/live-features.png)
+![CardSense live dashboard](assets/live-dashboard.png)
+
+### Benefits tracking
+
+![CardSense live benefits tracker](assets/live-benefits.png)
+
+### Card strategy
+
+![CardSense live card strategy](assets/live-strategy.png)
+
+### AI-powered insights
+
+![CardSense live insights](assets/live-insights.png)
 
 ---
 
