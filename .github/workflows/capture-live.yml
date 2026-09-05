@@ -1,0 +1,50 @@
+name: Capture live CardSense screenshots
+
+on:
+  push:
+    paths:
+      - '.github/workflows/capture-live.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps chromium
+      - name: Capture live deployment
+        run: |
+          mkdir -p assets
+          cat > /tmp/capture.js <<'NODE'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1.25 });
+            await page.goto('https://cardsense-27fu.onrender.com', { waitUntil: 'networkidle', timeout: 120000 });
+            await page.screenshot({ path: 'assets/live-home.png', fullPage: false });
+            const sections = page.locator('section');
+            if (await sections.count() > 1) {
+              await sections.nth(1).screenshot({ path: 'assets/live-features.png' });
+            } else {
+              await page.screenshot({ path: 'assets/live-features.png', fullPage: true });
+            }
+            await browser.close();
+          })().catch(e => { console.error(e); process.exit(1); });
+          NODE
+          node /tmp/capture.js
+      - name: Commit screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/live-home.png assets/live-features.png
+          git commit -m "Add screenshots from live CardSense deployment [skip ci]"
+          git push
