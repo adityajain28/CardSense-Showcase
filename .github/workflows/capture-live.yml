@@ -16,18 +16,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install browser
+      - name: Install Playwright API
         run: |
           npm init -y
-          npm install playwright
-          npx playwright install --with-deps chromium
+          npm install playwright-core
       - name: Capture live deployment
         run: |
           mkdir -p assets
           cat > /tmp/capture.js <<'NODE'
-          const { chromium } = require('playwright');
+          const { chromium } = require('playwright-core');
           (async () => {
-            const browser = await chromium.launch({ headless: true });
+            const browser = await chromium.launch({ headless: true, executablePath: '/usr/bin/google-chrome' });
             const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1.25 });
             await page.goto('https://cardsense-27fu.onrender.com', { waitUntil: 'networkidle', timeout: 120000 });
             await page.screenshot({ path: 'assets/live-home.png', fullPage: false });
