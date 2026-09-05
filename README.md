@@ -4,9 +4,21 @@
 
 > **Portfolio project** · Source code is maintained in a private repository.
 
+[**Live app →**](https://cardsense-27fu.onrender.com)
+
 CardSense brings card benefits, points balances, usage history, and purchase recommendations into one place. Instead of checking multiple issuer apps or trying to remember which card is best for a purchase, users can track their wallet and get a recommendation based on their cards, benefits, and spending rules.
 
 The application is designed around a simple privacy principle: **personal card data stays in the browser by default.**
+
+---
+
+## Live product
+
+![CardSense live application](assets/live-home.png)
+
+*Captured directly from the deployed CardSense application.*
+
+![CardSense feature overview](assets/live-features.png)
 
 ---
 
@@ -96,7 +108,7 @@ Users can export a complete JSON snapshot and later restore it, making the local
 | Recommendation logic | JavaScript rules engine + LLM layer |
 | Offline support | Service Worker, Web App Manifest |
 | Local development | Flask static server |
-| Deployment | Static web hosting / PWA |
+| Deployment | Render / PWA |
 
 ---
 
@@ -121,14 +133,6 @@ Ask questions such as:
 
 ### Insights
 Generate higher-level views of the wallet, including benefit digest, spend-category cheat sheet, annual-fee ROI, benefit timing calendar, points redemption ideas, and strategy history.
-
----
-
-## Screenshots
-
-Screenshots will be added here without exposing application source code.
-
-Recommended captures: dashboard, benefits, card strategy, AI insights, and mobile/PWA view.
 
 ---
 
